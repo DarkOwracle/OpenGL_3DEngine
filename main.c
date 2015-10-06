@@ -19,8 +19,8 @@
 #include "DrawTorus.h"
 
 //Gestion de la résolution de la fenetre au démarrage
-#define W_SCREEN 1280
-#define H_SCREEN  720
+#define W_SCREEN 853
+#define H_SCREEN  480
 #define RATIO_SCREEN  1.77
 
 //Les variables globales
