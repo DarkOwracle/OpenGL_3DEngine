@@ -43,10 +43,10 @@ TScene *g_pScene=NULL;
 //Les types de formes
 enum{
     TYPE_SHAPE_SPHERE = 0,
-    TYPE_SHAPE_CUBE = 1,
-    TYPE_SHAPE_CONE = 2,
-    TYPE_SHAPE_CYLINDRE = 3,
-    TYPE_SHAPE_TORUS = 4,
+    TYPE_SHAPE_CUBE,
+    TYPE_SHAPE_CONE,
+    TYPE_SHAPE_CYLINDRE,
+    TYPE_SHAPE_TORUS,
     TYPE_SHAPE_UNKNOWN
 };
 
@@ -143,7 +143,7 @@ void AddPrimitiveToRender(unsigned char type)
             pF_Draw = DrawCube;
             break;
 
-        case TYPE_SHAPE_CONE: //Une sphere
+        case TYPE_SHAPE_CONE: //Une cône
             pShape = malloc(sizeof(TShapeCone));
             if(pShape==NULL)
             {
@@ -153,12 +153,12 @@ void AddPrimitiveToRender(unsigned char type)
             printf("Rayon du cone: ");
             scanf("%f",&r0);
             ((TShapeCone*)pShape)->m_Radius = r0;
-            printf("Nombre de secteur: ");
-            scanf("%d",&i0);
-            ((TShapeCone*)pShape)->m_Sector = i0;
             printf("Hauteur du cone: ");
             scanf("%f",&h0);
             ((TShapeCone*)pShape)->m_Height = h0;
+            printf("Nombre de secteur: ");
+            scanf("%d",&i0);
+            ((TShapeCone*)pShape)->m_Sector = i0;
             pF_Draw = DrawCone;
             break;
             
@@ -172,16 +172,15 @@ void AddPrimitiveToRender(unsigned char type)
             printf("Rayon du cylindre: ");
             scanf("%f",&r0);
             ((TShapeCylindre*)pShape)->m_Radius = r0;
-            printf("Nombre de secteur: ");
-            scanf("%d",&i0);
-            ((TShapeCylindre*)pShape)->m_Sector = i0;
             printf("Hauteur du cone: ");
             scanf("%f",&h0);
             ((TShapeCylindre*)pShape)->m_Size = h0;
+            printf("Nombre de secteur: ");
+            scanf("%d",&i0);
+            ((TShapeCylindre*)pShape)->m_Sector = i0;
             pF_Draw = DrawCylindre;
             break;
 
-            
          case TYPE_SHAPE_TORUS: //Une tore
             pShape = malloc(sizeof(TShapeTorus));
             if(pShape==NULL)
