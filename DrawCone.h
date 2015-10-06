@@ -4,7 +4,7 @@
 typedef struct{
     float m_Radius;
     int m_Sector;
-    int m_Size;
+    float m_Height;
 }TShapeCone;
 
 void DrawCone(void* pT);
