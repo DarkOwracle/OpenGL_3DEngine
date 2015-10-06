@@ -9,18 +9,13 @@
 //Nos fonctions
 #include "DrawSphere.h"
 #include "DrawCube.h"
+#include "DrawCone.h"
+#include "DrawCylindre.h"
+#include "DrawTorus.h"
 #include "MatrixTransform.h"
 #include "GeometricPrimitive.h"
 #include "Scene.h"
 #include "MathLib.h"
-////AJOUT
-#include "DrawTorus.h"
-#include "DrawCylindre.h"
-#include "DrawCone.h"
-
-#define W_SCREEN 1280
-#define H_SCREEN  720
-#define RATIO_SCREEN  1.77
 
 //Les variables globales
 //La fenetre principale
@@ -48,10 +43,10 @@ TScene *g_pScene=NULL;
 //Les types de formes
 enum{
     TYPE_SHAPE_SPHERE = 0,
-    TYPE_SHAPE_CUBE,
-    TYPE_SHAPE_TORUS,
-    TYPE_SHAPE_CYLINDRE,
-    TYPE_SHAPE_CONE,
+    TYPE_SHAPE_CUBE = 1,
+    TYPE_SHAPE_CONE = 2,
+    TYPE_SHAPE_CYLINDRE = 3,
+    TYPE_SHAPE_TORUS = 4,
     TYPE_SHAPE_UNKNOWN
 };
 
@@ -113,9 +108,8 @@ static void fixCloseWindowOnWin32()
 void AddPrimitiveToRender(unsigned char type)
 {
 //Des variables
-    float r0,r1;
-    int i0;
-    int l0; //ajouté pour le cylindre
+    float r0,h0,rmax;
+    int i0,i1;
 //Cree la forme ...
     void *pShape = NULL;
     void (*pF_Draw)(void*) = NULL;
@@ -136,7 +130,6 @@ void AddPrimitiveToRender(unsigned char type)
             ((TShapeSphere*)pShape)->m_Sector = i0;
             pF_Draw = DrawSphere;
             break;
-
         case TYPE_SHAPE_CUBE: //Un cube
             pShape = malloc(sizeof(TShapeCube));
             if(pShape==NULL)
@@ -150,66 +143,67 @@ void AddPrimitiveToRender(unsigned char type)
             pF_Draw = DrawCube;
             break;
 
-
-        case TYPE_SHAPE_TORUS: //Un tore
-            pShape = malloc(sizeof(TShapeTorus));
+        case TYPE_SHAPE_CONE: //Une sphere
+            pShape = malloc(sizeof(TShapeCone));
             if(pShape==NULL)
             {
-                printf("Erreur pour creer la forme torus\n");
+                printf("Erreur pour creer la forme sphere\n");
                 return;
             }
-            printf("Rayon min: ");
+            printf("Rayon du cone: ");
             scanf("%f",&r0);
-            ((TShapeTorus*)pShape)->m_RadiusMin = r0;
-            printf("Rayon max: ");
-            scanf("%f",&r1);
-            ((TShapeTorus*)pShape)->m_RadiusMax = r1;
-            printf("Nombre de secteur ring: ");
+            ((TShapeCone*)pShape)->m_Radius = r0;
+            printf("Nombre de secteur: ");
             scanf("%d",&i0);
-            ((TShapeTorus*)pShape)->m_SectorRing = i0;
-            printf("Nombre de secteur cote: ");
-            scanf("%d",&l0);
-            ((TShapeTorus*)pShape)->m_SectorSide = l0;
-            pF_Draw = DrawTorus;
+            ((TShapeCone*)pShape)->m_Sector = i0;
+            printf("Hauteur du cone: ");
+            scanf("%f",&h0);
+            ((TShapeCone*)pShape)->m_Height = h0;
+            pF_Draw = DrawCone;
             break;
-
+            
         case TYPE_SHAPE_CYLINDRE: //Un cylindre
             pShape = malloc(sizeof(TShapeCylindre));
             if(pShape==NULL)
             {
-                printf("Erreur pour creer la forme Cylindre\n");
+                printf("Erreur pour creer la forme cylindre\n");
                 return;
             }
-            printf("Taille du Rayon: ");
+            printf("Rayon du cylindre: ");
             scanf("%f",&r0);
             ((TShapeCylindre*)pShape)->m_Radius = r0;
-            printf("Nombre de secteurs: ");
+            printf("Nombre de secteur: ");
             scanf("%d",&i0);
             ((TShapeCylindre*)pShape)->m_Sector = i0;
-            printf("Longueur du cylindre: ");
-            scanf("%d",&l0);
-            ((TShapeCylindre*)pShape)->m_Size = l0;
+            printf("Hauteur du cone: ");
+            scanf("%f",&h0);
+            ((TShapeCylindre*)pShape)->m_Size = h0;
             pF_Draw = DrawCylindre;
             break;
 
-        case TYPE_SHAPE_CONE: //Un cône
-            pShape = malloc(sizeof(TShapeCone));
+            
+         case TYPE_SHAPE_TORUS: //Une tore
+            pShape = malloc(sizeof(TShapeTorus));
             if(pShape==NULL)
             {
-                printf("Erreur pour creer la forme Cone\n");
+                printf("Erreur pour creer la forme Tore\n");
                 return;
             }
-            printf("Taille du Rayon: ");
+            printf("Rayon minimum: ");
             scanf("%f",&r0);
-            ((TShapeCone*)pShape)->m_Radius = r0;
-            printf("Nombre de secteurs: ");
+            ((TShapeTorus*)pShape)->m_RadiusMin = r0;
+            printf("Rayon maximum: ");
+            scanf("%f",&rmax);
+            ((TShapeTorus*)pShape)->m_RadiusMax = rmax;
+            printf("Nombre de secteurs de l'anneau: ");
             scanf("%d",&i0);
-            ((TShapeCone*)pShape)->m_Sector = i0;
-            printf("Longueur du cone: ");
-            scanf("%d",&l0);
-            ((TShapeCone*)pShape)->m_Size = l0;
-            pF_Draw = DrawCone;
+            ((TShapeTorus*)pShape)->m_SectorRing = i0;
+            printf("Nombre de secteurs lateraux: ");
+            scanf("%d",&i1);
+            ((TShapeTorus*)pShape)->m_SectorSide = i1;
+            pF_Draw = DrawTorus;
             break;
+            
 
         default:
             printf("Erreur, le type de primitive n'existe pas!");
@@ -330,6 +324,7 @@ void MouseMotionFunc(int x, int y)
         g_mouse_startX = x;
         g_mouse_startY = y;
     }
+    //Si c'est la translation
     else if(g_mouse_translateZ)
     {
         g_camera_transZ += (y-g_mouse_startY)/10.0;
@@ -357,7 +352,7 @@ void KeyboardFunc(unsigned char key, int x, int y)
     switch(key)
     {
         case 'a':
-            printf("%d: sphere\n%d: Cube\n%d: Tore\n%d: Cylindre\n%d: Cone\n",TYPE_SHAPE_SPHERE,TYPE_SHAPE_CUBE,TYPE_SHAPE_TORUS,TYPE_SHAPE_CYLINDRE, TYPE_SHAPE_CONE);
+            printf("%d: Sphere\n%d: Cube\n%d: Cone\n%d: Cylindre\n%d: Tore",TYPE_SHAPE_SPHERE,TYPE_SHAPE_CUBE,TYPE_SHAPE_CONE,TYPE_SHAPE_CYLINDRE,TYPE_SHAPE_TORUS);
             printf("Forme a ajouter: ");
             scanf("%i",&i0);
             AddPrimitiveToRender(i0);
@@ -389,6 +384,7 @@ void DrawOrthonormal()
     glEnd();
     glEnable(GL_LIGHTING);
 }
+
 
 //La fonction de dessin pour GLUT
 void DisplayFunc()
@@ -447,6 +443,7 @@ void CreateSceneMoteur3D()
     }
 }
 
+
 int main(int argc, char *argv[])
 {
 //Initialisation de glut
@@ -455,7 +452,6 @@ int main(int argc, char *argv[])
 //                        2 buffers   RGB          profondeur
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 //Creation de la fenetre
-    glutInitWindowSize(W_SCREEN,H_SCREEN);
     g_window = glutCreateWindow("Moteur 3D");
 //La fonction pour dessiner
     glutDisplayFunc(DisplayFunc);
@@ -473,7 +469,7 @@ int main(int argc, char *argv[])
   glMatrixMode(GL_PROJECTION);
   //Les specifications de cette matrice
   gluPerspective( 45.0, //Angle d'ouverture
-                  RATIO_SCREEN,  //Le ratio entre X et Y
+                  1.0,  //Le ratio entre X et Y
                   0.1, //La limite min en Z
                   200.0); //La limite max en Z
 
