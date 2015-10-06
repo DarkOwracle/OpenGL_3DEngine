@@ -18,6 +18,10 @@
 #include "DrawCylindre.h"
 #include "DrawCone.h"
 
+#define W_SCREEN 1280
+#define H_SCREEN  720
+#define RATIO_SCREEN  1.77
+
 //Les variables globales
 //La fenetre principale
 static int g_window;
@@ -451,6 +455,7 @@ int main(int argc, char *argv[])
 //                        2 buffers   RGB          profondeur
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 //Creation de la fenetre
+    glutInitWindowSize(W_SCREEN,H_SCREEN);
     g_window = glutCreateWindow("Moteur 3D");
 //La fonction pour dessiner
     glutDisplayFunc(DisplayFunc);
@@ -468,7 +473,7 @@ int main(int argc, char *argv[])
   glMatrixMode(GL_PROJECTION);
   //Les specifications de cette matrice
   gluPerspective( 45.0, //Angle d'ouverture
-                  1.0,  //Le ratio entre X et Y
+                  RATIO_SCREEN,  //Le ratio entre X et Y
                   0.1, //La limite min en Z
                   200.0); //La limite max en Z
 
