@@ -205,7 +205,7 @@ void AddPrimitiveToRender(unsigned char type)
             
 
         default:
-            printf("Erreur, le type de primitive n'existe pas!");
+            printf("Erreur, le type de primitive n'existe pas!\n");
             return;
     }
 //Les proprietes de la primitive
@@ -351,7 +351,7 @@ void KeyboardFunc(unsigned char key, int x, int y)
     switch(key)
     {
         case 'a':
-            printf("%d: Sphere\n%d: Cube\n%d: Cone\n%d: Cylindre\n%d: Tore",TYPE_SHAPE_SPHERE,TYPE_SHAPE_CUBE,TYPE_SHAPE_CONE,TYPE_SHAPE_CYLINDRE,TYPE_SHAPE_TORUS);
+            printf("%d: Sphere\n%d: Cube\n%d: Cone\n%d: Cylindre\n%d: Tore\n",TYPE_SHAPE_SPHERE,TYPE_SHAPE_CUBE,TYPE_SHAPE_CONE,TYPE_SHAPE_CYLINDRE,TYPE_SHAPE_TORUS);
             printf("Forme a ajouter: ");
             scanf("%i",&i0);
             AddPrimitiveToRender(i0);
