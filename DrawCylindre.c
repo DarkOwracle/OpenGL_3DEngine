@@ -46,28 +46,28 @@ void DrawCylindre(void *pT)
         glBegin(GL_TRIANGLES);
             glNormal3f(0.0,0.0,-1.0f);
             glVertex3f(0,0,0);
-            glVertex3f(p1x*radius,p1y*radius,p1z*radius);
-            glVertex3f(p4x*radius,p4y*radius,p4z*radius);
+            glVertex3f(p1x*radius,p1y*radius,0);
+            glVertex3f(p4x*radius,p4y*radius,0);
         glEnd();
 
         //Création d'un rectangle
         glBegin(GL_QUADS);
             glNormal3f(p1x,p1y,p1z);
-            glVertex3f(p1x*radius,p1y*radius,p1z*radius);
+            glVertex3f(p1x*radius,p1y*radius,0);
             glNormal3f(p2x,p2y,0.0);
-            glVertex3f(p2x*radius,p2y*radius,p2z*radius);
+            glVertex3f(p2x*radius,p2y*radius,p2z);
             glNormal3f(p3x,p3y,0.0);
-            glVertex3f(p3x*radius,p3y*radius,p3z*radius);
+            glVertex3f(p3x*radius,p3y*radius,p3z);
             glNormal3f(p4x,p4y,p4z);
-            glVertex3f(p4x*radius,p4y*radius,p4z*radius);
+            glVertex3f(p4x*radius,p4y*radius,0);
         glEnd();
 
         //Création du triangle du dessous
         glBegin(GL_TRIANGLES);
             glNormal3f(0.0,0.0,1.0f);
             glVertex3f(0,0,p2z*radius);
-            glVertex3f(p2x*radius,p2y*radius,p2z*radius);
-            glVertex3f(p3x*radius,p3y*radius,p3z*radius);
+            glVertex3f(p2x*radius,p2y*radius,p2z);
+            glVertex3f(p3x*radius,p3y*radius,p3z);
         glEnd();
 
         //----------CYLINDRE EN POSITION VERTICALE-----------
