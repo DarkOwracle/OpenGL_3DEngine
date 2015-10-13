@@ -65,7 +65,7 @@ void DrawCylindre(void *pT)
         //Création du triangle du dessous
         glBegin(GL_TRIANGLES);
             glNormal3f(0.0,0.0,1.0f);
-            glVertex3f(0,0,p2z*radius);
+            glVertex3f(0,0,p2z);
             glVertex3f(p2x*radius,p2y*radius,p2z);
             glVertex3f(p3x*radius,p3y*radius,p3z);
         glEnd();
