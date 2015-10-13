@@ -32,7 +32,9 @@ void DrawCone(void* pT)
         
         glNormal3f(cos(i*dp)*cos(alpha),sin(alpha),cos(alpha)*sin(i*dp));
         glVertex3f((radius*cos(i*dp)),0,(radius*sin(i*dp)));
+        glNormal3f(cos((i+1)*dp)*cos(alpha),sin(alpha),cos(alpha)*sin((i+1)*dp));
         glVertex3f((radius*cos((i+1)*dp)),0,(radius*sin((i+1)*dp)));
+        glNormal3f(0,1,0);
         glVertex3f(0,height,0);
         glEnd();
     }
