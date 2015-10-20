@@ -6,7 +6,7 @@
 #include <GL\gl.h>
 #include <GL\glu.h>
 
-//Les fonctions avancées
+//Les fonctions avancÃ©es
 #include "MatrixTransform.h"
 #include "GeometricPrimitive.h"
 #include "Scene.h"
@@ -18,7 +18,7 @@
 #include "DrawCylindre.h"
 #include "DrawTorus.h"
 
-//Gestion de la résolution de la fenetre au démarrage
+//Gestion de la rÃ©solution de la fenetre au dÃ©marrage
 #define W_SCREEN 853
 #define H_SCREEN  480
 #define RATIO_SCREEN  1.77
@@ -28,8 +28,8 @@
 static int g_window;
 
 //La position et rotation de la camera
-static float g_camera_angleX = 0;   //L'angle de rotation suivant X (en °)
-static float g_camera_angleY = 0;   //L'angle de rotaion suivant Y (en °)
+static float g_camera_angleX = 0;   //L'angle de rotation suivant X (en Â°)
+static float g_camera_angleY = 0;   //L'angle de rotaion suivant Y (en Â°)
 static float g_camera_transX = 0;   //La translation suivant X
 static float g_camera_transY = 0;   //La translation suivant Y
 static float g_camera_transZ = 20;  //La translation suivant Z
@@ -149,7 +149,7 @@ void AddPrimitiveToRender(unsigned char type)
             pF_Draw = DrawCube;
             break;
 
-        case TYPE_SHAPE_CONE: //Une cône
+        case TYPE_SHAPE_CONE: //Une cÃ´ne
             pShape = malloc(sizeof(TShapeCone));
             if(pShape==NULL)
             {
@@ -223,12 +223,13 @@ void AddPrimitiveToRender(unsigned char type)
                              (float)GetRand(-10,10),
                              (float)GetRand(-10,10));
 
+
     //Cree une couleur
     float color[3]={(float)GetRand(0,100)/100.F,
                     (float)GetRand(0,100)/100.F,
                     (float)GetRand(0,100)/100.F};
     //Cree un materiau
-    TMaterial *pMat = CreateMaterial(color,NULL);
+    TMaterial *pMat = CreateMaterial(color,NULL,NULL);
 
 //Cree la primitive
     TGeometricPrimitive *pPrim = CreateGeometricPrimitive(pF_Draw,
@@ -405,7 +406,7 @@ void DisplayFunc()
     glLoadIdentity();
     //La position du regard
     gluLookAt(0.0,0.0,g_camera_transZ, //L'oeil
-              0.0,0.0,0.0,  //Vers où
+              0.0,0.0,0.0,  //Vers oÃ¹
               0.0,1.0,0.0); //orientation de l'oeil
 
 //Effectue des deplacement de la camera
