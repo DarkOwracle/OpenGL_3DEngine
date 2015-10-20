@@ -3,7 +3,7 @@
 #include <GL\gl.h>
 #include <stdlib.h>
 
-TMaterial* CreateMaterial(float Kd[], float Ke[])
+TMaterial* CreateMaterial(float Kd[], float Ke[], char *texturename)
 {
     TMaterial *pmat = malloc(sizeof(TMaterial));
     int i;
@@ -17,6 +17,14 @@ TMaterial* CreateMaterial(float Kd[], float Ke[])
             pmat->m_Ke[i] = Ke[i];
         else
             pmat->m_Ke[i] = 0.0f;
+    }
+    if(texturename!=NULL)
+    {
+        
+    }
+    else
+    {
+        pmat->m_Texture=NULL;
     }
     return pmat;
 }
