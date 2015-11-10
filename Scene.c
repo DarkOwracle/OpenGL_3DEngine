@@ -178,3 +178,26 @@ void DrawScene(TScene *ps)
     //Desactive les effets de lumiere
     glDisable(GL_LIGHTING);
 }
+
+void DrawScenePicking(TScene *ps)
+{
+    if(ps==NULL)
+    {
+        printf("Erreur DrawScene (pS=NULL)\n");
+        return;
+    }
+    //Pas de lumiere ambiante
+    //GLfloat ambientColor[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    //glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
+    //Active les lampes
+    //glEnable(GL_LIGHTING);
+    //Place les lampes
+    //int i;
+    //for(i=0; i<ps->m_NumberLight; i++)
+    //    DrawLight(ps->m_pLight[i]);
+    //Place les primitives
+    for(i=0; i<ps->m_NumberPrimitive; i++)
+        DrawGeometricPrimitive(ps->m_pPrimitive[i]);
+    //Desactive les effets de lumiere
+    //glDisable(GL_LIGHTING);     
+}
